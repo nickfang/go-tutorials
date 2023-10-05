@@ -1,14 +1,12 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"web-app/pkg/render"
 )
 
 // Home is the home page handler
 func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Home page handler called")
 	render.RenderTemplate(w, "home.page.tmpl")
 }
 
