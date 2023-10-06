@@ -10,15 +10,11 @@ import (
 )
 
 func routes(app *config.AppConfig) http.Handler {
-	// mux := pat.New()
-
-	// mux.Get("/", http.HandlerFunc(handlers.Repo.Home))
-	// mux.Get("/about", http.HandlerFunc(handlers.Repo.About))
-	// mux.Get("/favicon.ico", http.HandlerFunc(handlers.Repo.Favicon))
-
 	mux := chi.NewRouter()
 
 	mux.Use(middleware.Recoverer)
+	mux.Use(WriteToConsole)
+	mux.Use(NoSurf)
 
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
