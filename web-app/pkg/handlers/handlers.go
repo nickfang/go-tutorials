@@ -42,6 +42,6 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func Favicon(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) Favicon(w http.ResponseWriter, r *http.Request) {
 	// do nothing
 }
