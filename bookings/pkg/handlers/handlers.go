@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -81,6 +82,29 @@ func (m *Repository) PostSearchAvailability(w http.ResponseWriter, r *http.Reque
 	end := r.Form.Get("end_date")
 
 	w.Write([]byte(fmt.Sprintf("start date is %s and end date is %s", start, end)))
+}
+
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+// SearchAvailabilityJSON is the Search Availability json response handler
+func (m *Repository) SearchAvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	resp := jsonResponse{
+		OK:      true,
+		Message: "Available!",
+	}
+
+	out, err := json.MarshalIndent(resp, "", "  ")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(string(out))
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 func (m *Repository) Favicon(w http.ResponseWriter, r *http.Request) {
