@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/nickfang/bookings/pkg/config"
-	"github.com/nickfang/bookings/pkg/handlers"
-	"github.com/nickfang/bookings/pkg/render"
+	"github.com/nickfang/bookings/internal/config"
+	"github.com/nickfang/bookings/internal/handlers"
+	"github.com/nickfang/bookings/internal/render"
 	"log"
 	"net/http"
 	"time"

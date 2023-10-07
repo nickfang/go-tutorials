@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/nickfang/bookings/pkg/config"
-	"github.com/nickfang/bookings/pkg/models"
-	"github.com/nickfang/bookings/pkg/render"
+	"github.com/nickfang/bookings/internal/config"
+	"github.com/nickfang/bookings/internal/models"
+	"github.com/nickfang/bookings/internal/render"
 )
 
 // Repo is the repository used by the handlers
