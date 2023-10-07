@@ -91,17 +91,15 @@ type jsonResponse struct {
 
 // SearchAvailabilityJSON is the Search Availability json response handler
 func (m *Repository) SearchAvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Form.Get("start_date"))
 	resp := jsonResponse{
 		OK:      true,
 		Message: "Available!",
 	}
-
 	out, err := json.MarshalIndent(resp, "", "  ")
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Println(string(out))
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)
