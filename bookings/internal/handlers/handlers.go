@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/nickfang/bookings/internal/config"
+	"github.com/nickfang/bookings/internal/forms"
 	"github.com/nickfang/bookings/internal/models"
 	"github.com/nickfang/bookings/internal/render"
 )
@@ -68,7 +69,15 @@ func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
 
 // MakeReservation is the Make Reservation page handler
 func (m *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
+	fmt.Println("MakeReservation")
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+// PostMakeReservation is the Make Reservation page handler
+func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request) {
+
 }
 
 // SearchAvailability is the Search Availability page handler
