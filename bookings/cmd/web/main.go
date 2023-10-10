@@ -48,6 +48,7 @@ func run() error {
 	session.Cookie.Persist = true            // persist session across browser restarts
 	session.Cookie.Secure = app.InProduction // set to true in production
 	session.Cookie.SameSite = http.SameSiteLaxMode
+	app.Session = session
 
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
@@ -56,7 +57,6 @@ func run() error {
 	}
 	app.TemplateCache = tc
 	app.UseCache = false
-	app.Session = session
 
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
