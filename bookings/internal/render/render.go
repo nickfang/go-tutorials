@@ -14,6 +14,8 @@ import (
 )
 
 var app *config.AppConfig
+var functions = template.FuncMap{}
+var pathToTemplate = "./templates"
 
 // NewTemplates sets the config for the template package
 func NewTemplates(a *config.AppConfig) {
@@ -29,7 +31,6 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 }
 
 func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
-	fmt.Println("RenderTemplate")
 	var tc map[string]*template.Template
 	if app.UseCache {
 		// get template cache from app config
@@ -62,25 +63,25 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 	cache := map[string]*template.Template{}
 
 	// get a slice of all template files
-	pages, err := filepath.Glob("./templates/*.page.tmpl")
+	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.tmpl", pathToTemplate))
 	if err != nil {
 		return cache, err
 	}
 	// loop through the pages one-by-one
 	for _, page := range pages {
 		name := filepath.Base(page)
-		ts, err := template.New(name).ParseFiles(page)
+		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			return cache, err
 		}
 
-		matches, err := filepath.Glob("./templates/*.layout.tmpl")
+		matches, err := filepath.Glob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplate))
 		if err != nil {
 			return cache, err
 		}
 
 		if len(matches) > 0 {
-			ts, err := ts.ParseGlob("./templates/*.layout.tmpl")
+			ts, err := ts.ParseGlob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplate))
 			if err != nil {
 				return cache, err
 			}
