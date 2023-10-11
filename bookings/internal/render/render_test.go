@@ -7,8 +7,6 @@ import (
 	"github.com/nickfang/bookings/internal/models"
 )
 
-var pathToTemplates string
-
 func TestAddDefaultData(t *testing.T) {
 	var td models.TemplateData
 
@@ -37,7 +35,6 @@ func TestRenderTemplate(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-
 	err = RenderTemplate(ww, r, "home.page.tmpl", &models.TemplateData{})
 	if err != nil {
 		t.Error("error writing template to browser")
