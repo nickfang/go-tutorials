@@ -10,8 +10,9 @@ import (
 // AppConfig holds the application config
 type AppConfig struct {
 	UseCache      bool
+	InProduction  bool
 	TemplateCache map[string]*template.Template
 	InfoLog       *log.Logger
-	InProduction  bool
+	ErrorLog      *log.Logger
 	Session       *scs.SessionManager
 }
