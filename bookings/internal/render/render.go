@@ -2,6 +2,7 @@ package render
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"html/template"
 	"log"
@@ -30,7 +31,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	return td
 }
 
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	var tc map[string]*template.Template
 	if app.UseCache {
 		// get template cache from app config
@@ -42,20 +43,26 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 	// get requested template from cache
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Fatal("Could not get template from template cache.")
+		return errors.New("can't get template from cache")
 	}
 
 	buf := new(bytes.Buffer)
 
 	td = AddDefaultData(td, r)
 
-	_ = t.Execute(buf, td)
+	executeErr := t.Execute(buf, td)
+	if executeErr != nil {
+		log.Fatal(executeErr)
+		return executeErr
+	}
 
 	// render the template
-	_, err := buf.WriteTo(w)
-	if err != nil {
-		log.Println("Error writing template to browser", err)
+	_, renderErr := buf.WriteTo(w)
+	if renderErr != nil {
+		log.Println("Error writing template to browser", renderErr)
+		return renderErr
 	}
+	return nil
 }
 
 func CreateTemplateCache() (map[string]*template.Template, error) {

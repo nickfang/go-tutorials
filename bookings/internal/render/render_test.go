@@ -7,6 +7,8 @@ import (
 	"github.com/nickfang/bookings/internal/models"
 )
 
+var pathToTemplates string
+
 func TestAddDefaultData(t *testing.T) {
 	var td models.TemplateData
 
@@ -19,7 +21,31 @@ func TestAddDefaultData(t *testing.T) {
 	if result.Flash != "123" {
 		t.Error("flash value of 123 not found in session")
 	}
+}
 
+func TestRenderTemplate(t *testing.T) {
+	pathToTemplates = "../../templates"
+	tc, err := CreateTemplateCache()
+	if err != nil {
+		t.Error(err)
+	}
+	app.TemplateCache = tc
+
+	var ww myWriter
+
+	r, err := getSession()
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = RenderTemplate(ww, r, "home.page.tmpl", &models.TemplateData{})
+	if err != nil {
+		t.Error("error writing template to browser")
+	}
+	err = RenderTemplate(ww, r, "not-existent.page.tmpl", &models.TemplateData{})
+	if err == nil {
+		t.Error("rendered template that does not exist")
+	}
 }
 
 func getSession() (*http.Request, error) {
@@ -32,4 +58,16 @@ func getSession() (*http.Request, error) {
 	r = r.WithContext(ctx)
 
 	return r, nil
+}
+
+func TestNewTemplates(t *testing.T) {
+	NewTemplates(app)
+}
+
+func TestCreateTemplateCache(t *testing.T) {
+	pathToTemplates = "../../templates"
+	_, err := CreateTemplateCache()
+	if err != nil {
+		t.Error(err)
+	}
 }
