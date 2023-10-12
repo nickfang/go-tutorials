@@ -2,9 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/nickfang/bookings/internal/config"
@@ -144,7 +142,7 @@ func (m *Repository) SearchAvailabilityJSON(w http.ResponseWriter, r *http.Reque
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 	if !ok {
-		helpers.ServerError(w, errors.New("cannot get reservation from session"))
+		m.App.ErrorLog.Println("cannot get reservation from session")
 		m.App.Session.Put(r.Context(), "error", "Cannot get item from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return

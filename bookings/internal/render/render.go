@@ -48,7 +48,6 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 	buf := new(bytes.Buffer)
 
 	td = AddDefaultData(td, r)
-	fmt.Println("executing template")
 	executeErr := t.Execute(buf, td)
 	if executeErr != nil {
 		log.Fatal(executeErr)
