@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go build -o bookings cmd/web/*.go && ./bookings
+go build -o built/bookings cmd/web/*.go && ./built/bookings
