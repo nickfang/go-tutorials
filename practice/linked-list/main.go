@@ -90,6 +90,16 @@ func (ll *LinkedList) GetLength() int {
 	return length
 }
 
+func (ll *LinkedList) GetIndexValue(index int) string{
+
+}
+
+func (ll *LinkedList) GetValueIndex(value string) int {
+
+}
+
+
+
 func (ll *LinkedList) showList() {
 	item := ll.Head
 	for item != nil {
