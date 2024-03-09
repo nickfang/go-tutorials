@@ -178,6 +178,20 @@ func main() {
 		// time.Sleep(3 * time.Second)
 		resultChan <- message
 	}()
+	go func() {
+		result := list.GetIndexOfValue(100)
+		message := fmt.Sprintf("Value 100: %d\n", result)
+		// time.Sleep(3 * time.Second)
+		resultChan <- message
+	}()
+	go func() {
+		result := list.GetIndexOfValue(55000)
+		message := fmt.Sprintf("Value 50000: %d\n", result)
+		// time.Sleep(3 * time.Second)
+		resultChan <- message
+	}()
+	fmt.Printf(<- resultChan)
+	fmt.Printf(<- resultChan)
 	fmt.Printf(<- resultChan)
 	fmt.Printf(<- resultChan)
 	fmt.Printf(<- resultChan)
