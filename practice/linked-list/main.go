@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	// "time"
+)
 
 type Item[T string|int] struct {
 	Value T
@@ -149,29 +152,33 @@ func (ll *LinkedList[T]) showList() {
 }
 
 func main() {
-	list := LinkedList[string]{}
-	item1 := Item[string]{Value: "1"}
-	item2 := Item[string]{Value: "2"}
-	item3 := Item[string]{Value: "3"}
-	emptyValue := list.GetValueOfIndex(1)
-	fmt.Printf("%s", emptyValue)
-	list.AddToBeginning(&item2)
-	list.AddToBeginning(&item1)
-	item2.InsertItem(&item3)
+	list := LinkedList[int]{}
+	for i := 0; i < 100000; i++ {
+		item := Item[int]{Value: i}
+		list.AddToEnd(&item)
+	}
 
-	// showListItem(list.Head)
-	// showListItem(&item1)
-	// showListItem(&item2)
-	list.showList()
 	fmt.Printf("length %d\n", list.GetLength())
-	value4 := list.GetValueOfIndex(4)
-	fmt.Printf("%s\n", value4)
-	value1 := list.GetValueOfIndex(1)
-	fmt.Printf("%s\n", value1)
-	index1 := list.GetIndexOfValue("1")
-	fmt.Printf("Index of '1': %d\n", index1)
-	index2 := list.GetIndexOfValue("2")
-	fmt.Printf("Index of '2': %d\n", index2)
-	index3 := list.GetIndexOfValue("3")
-	fmt.Printf("Index of '3': %d\n", index3)
+	resultChan := make(chan string)
+	go func() {
+		result := list.GetValueOfIndex(99998)
+		message := fmt.Sprintf("Index 99998: %d\n", result)
+		// time.Sleep(1 * time.Second)
+		resultChan <- message
+	}()
+	go func() {
+		result := list.GetValueOfIndex(1)
+		message := fmt.Sprintf("Index 1: %d\n", result)
+		// time.Sleep(2 * time.Second)
+		resultChan <- message
+	}()
+	go func() {
+		result := list.GetValueOfIndex(50000)
+		message := fmt.Sprintf("Index 50000: %d\n", result)
+		// time.Sleep(3 * time.Second)
+		resultChan <- message
+	}()
+	fmt.Printf(<- resultChan)
+	fmt.Printf(<- resultChan)
+	fmt.Printf(<- resultChan)
 }
