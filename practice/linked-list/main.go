@@ -35,13 +35,6 @@ func (i *Item[T]) InsertItem(newItem *Item[T]) {
 	i.Next = newItem
 }
 
-func (i *Item[T]) showListItem() {
-	if i == nil { return }
-	fmt.Println(i.Value)
-	i.Next.showListItem()
-}
-
-
 func (ll *LinkedList[T]) CheckHeadAndTail() error{
 	if (ll.Head == nil && ll.Tail != nil) || (ll.Head != nil && ll.Tail == nil) {
 		error := fmt.Errorf("the head (%p) and tail (%p) must both have a value or both be nil", ll.Head, ll.Tail)
@@ -53,7 +46,6 @@ func (ll *LinkedList[T]) CheckHeadAndTail() error{
 func (ll *LinkedList[T]) IsEmpty() bool{
 	return ll.Head == nil && ll.Tail == nil
 }
-
 
 func (ll *LinkedList[T]) AddToBeginning(newItem *Item[T]) {
 	error := ll.CheckHeadAndTail()
@@ -143,7 +135,7 @@ func (ll *LinkedList[T]) GetIndexOfValue(value T) int {
 	return i
 }
 
-func (ll *LinkedList[T]) showList() {
+func (ll *LinkedList[T]) ShowList() {
 	item := ll.Head
 	for item != nil {
 		fmt.Println(item.Value)
@@ -157,7 +149,7 @@ func main() {
 		item := Item[int]{Value: i}
 		list.AddToEnd(&item)
 	}
-
+	list.ShowList()
 	fmt.Printf("length %d\n", list.GetLength())
 	resultChan := make(chan string)
 	go func() {
