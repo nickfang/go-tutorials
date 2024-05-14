@@ -19,10 +19,11 @@ func main() {
     }
     if isPrime {
       primes = append(primes, num)
+      answer = num
     }
+    // all even numbers are not prime
     num += 2
   }
-  answer = primes[10000]
   fmt.Println(answer)
   // 104743
 }
