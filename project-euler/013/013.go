@@ -224,8 +224,7 @@ func main() {
     }
     currentDigit := placeSum % 10
     sum = fmt.Sprint(currentDigit) + sum
-    carry = int(math.Floor(float64(placeSum / 10)))
-    fmt.Println(currentDigit)
+    carry = int(math.Floor(float64(placeSum) / 10))
   }
   sum = fmt.Sprint(carry) + sum
   answer = sum[:10]
