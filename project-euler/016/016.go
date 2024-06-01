@@ -6,16 +6,14 @@ import (
 )
 
 func main() {
-  answer := 0
+	answer := 0
 	// fmt.Println(2 << 14)  // playing with bit shifting
 	num := new(big.Int)
-  num.Exp(big.NewInt(2), big.NewInt(1000), nil) // 2^1000
-	fmt.Println(num)
+	num.Exp(big.NewInt(2), big.NewInt(1000), nil) // 2^1000
 	for _, digitStr := range num.String() {
-		fmt.Println(digitStr)
 		asciiNum := digitStr - '0'
-		fmt.Println(asciiNum)
 		answer += int(asciiNum)
 	}
-  fmt.Println(answer)
+	fmt.Println(answer)
+	// 1366
 }

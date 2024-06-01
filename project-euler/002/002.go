@@ -6,13 +6,12 @@ import "fmt"
 // 1, 2, 3, 5, 8, 13, 21, 34, 55, 89
 // By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
 
-
 func main() {
 	sum := 0
 	num1 := 1
 	num2 := 2
 	for num2 < 4000000 {
-		if num2 % 2 == 0 {
+		if num2%2 == 0 {
 			sum += num2
 		}
 		next := num1 + num2
@@ -20,4 +19,5 @@ func main() {
 		num2 = next
 	}
 	fmt.Println(sum)
+	// 4613732
 }
