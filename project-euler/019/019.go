@@ -13,7 +13,31 @@ package main
 
 import "fmt"
 
+func GetDaysInMonth(month, year int) int {
+	numDaysPerMonth := []int{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+	if month == 2 {
+		if year%4 == 0 && (year%100 != 0 || year%400 == 0) {
+			return numDaysPerMonth[2] + 1
+		}
+	}
+	return numDaysPerMonth[month]
+}
+
 func main() {
-	answer := ""
+	answer := 0
+
+	// 0=sunday ... 6=saturday
+	dayOfWeek := 1
+	for year := 1900; year <= 2000; year++ {
+		for month := 1; month <= 12; month++ {
+			if dayOfWeek == 0 && year >= 1901 {
+				answer += 1
+				fmt.Println(month, year)
+			}
+			daysInMonth := GetDaysInMonth(month, year)
+			dayOfWeek = (dayOfWeek + daysInMonth) % 7
+		}
+	}
 	fmt.Println(answer)
+	// 171
 }
