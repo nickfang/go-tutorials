@@ -17,23 +17,42 @@ func main() {
 	// Create the folder
 	err := os.Mkdir(name, 0755) // 0755: Standard permissions for directories
 	if err != nil {
-		fmt.Println("Error creating folder:", err)
+		if os.IsExist(err) {
+			fmt.Println("Directory already exists, proceeding...")
+		} else {
+			fmt.Println("Error creating folder:", err)
+			return
+		}
+	}
+
+	// Check if the file already exists
+	filePath := filepath.Join(name, name+".go")
+	if _, err := os.Stat(filePath); err == nil {
+		fmt.Println("File already exists. Aborting to prevent overwrite.")
+		return
+	} else if !os.IsNotExist(err) {
+		fmt.Println("Error checking file existence:", err)
 		return
 	}
 
 	// Create the .go file
-	filename := filepath.Join(name, name+".go")
 	problemTemplate := `package main
 
-import "fmt"
+import (
+  "fmt"
+  "time"
+)
 
 func main() {
+	startTime := time.Now()
   answer := ""
   fmt.Println(answer)
+	duration := time.Since(startTime)
+	fmt.Println("Duration:", duration)
 }
 `
 
-	err = os.WriteFile(filename, []byte(problemTemplate), 0644) // 0644: Usual permissions for files
+	err = os.WriteFile(filePath, []byte(problemTemplate), 0644)
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 		return

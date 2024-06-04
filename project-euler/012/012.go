@@ -18,40 +18,26 @@ package main
 
 import (
 	"fmt"
-	"sort"
+	"project-euler-go/utils"
 	"time"
 )
 
-func getFactors(num int) []int {
-  factors := []int{1, num}
-  for i := 2; i*i < num; i++ {
-    if num % i == 0 {
-      factors = append(factors, i)
-      if i != num / i {
-        factors = append(factors, num / i)
-      }
-    }
-  }
-  sort.Ints(factors)
-  return factors
-}
-
 func main() {
-  startTime := time.Now()
-  answer := 0
-  i := 1
-  done := false
-  for !done {
-    tNum := i * (i + 1) / 2
-    factors := getFactors(tNum)
-    i++
-    if len(factors) > 500 {
-      done = true
-      answer = tNum
-    }
-  }
-  fmt.Println(answer)
-  // 76576500
-  duration := time.Since(startTime)
-  fmt.Println("Duration:", duration)
+	startTime := time.Now()
+	answer := 0
+	i := 1
+	done := false
+	for !done {
+		tNum := i * (i + 1) / 2
+		factors := utils.GetFactors(tNum)
+		i++
+		if len(factors) > 500 {
+			done = true
+			answer = tNum
+		}
+	}
+	fmt.Println(answer)
+	// 76576500
+	duration := time.Since(startTime)
+	fmt.Println("Duration:", duration)
 }
