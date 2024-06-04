@@ -1,13 +1,8 @@
 package utils
 
 import (
-	"fmt"
 	"sort"
 )
-
-func CheckUtils() {
-	fmt.Println("Utils function.")
-}
 
 func GetFactors(num int) []int {
 	factors := []int{1, num}
@@ -20,5 +15,11 @@ func GetFactors(num int) []int {
 		}
 	}
 	sort.Ints(factors)
+	return factors
+}
+
+func GetProperDivisors(num int) []int {
+	factors := GetFactors(num)
+	factors = factors[:len(factors)-1]
 	return factors
 }
