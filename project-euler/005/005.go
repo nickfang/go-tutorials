@@ -6,24 +6,25 @@ package main
 import "fmt"
 
 func main() {
-  answer := 20
-  divisors := []int{20,19,18,17,16,15,14,13,12,11,7}
-  for {
-    isDivisible := true
-    for i := range  divisors {
-      if answer % divisors[i] != 0 {
-        isDivisible = false
-        break
-      }
-    }
-    if isDivisible {
-      break
-    }
+	answer := 20
+	// optimization, removed factors of larger numbers
+	divisors := []int{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 7}
+	for {
+		isDivisible := true
+		for i := range divisors {
+			if answer%divisors[i] != 0 {
+				isDivisible = false
+				break
+			}
+		}
+		if isDivisible {
+			break
+		}
 
-    answer += 2
-  }
-  // 232792560
-  fmt.Println(answer)
+		answer += 2
+	}
+	// 232792560
+	fmt.Println(answer)
 }
 
 // Accidentally found prime factors instead of divisors.
