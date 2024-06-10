@@ -6,9 +6,10 @@ import (
 
 func GetFactors(num int) []int {
 	factors := []int{1, num}
-	for i := 2; i*i < num; i++ {
+	for i := 2; i*i <= num; i++ {
 		if num%i == 0 {
 			factors = append(factors, i)
+
 			if i != num/i {
 				factors = append(factors, num/i)
 			}
