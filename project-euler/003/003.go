@@ -9,22 +9,22 @@ import (
 )
 
 func main() {
-  largestFactor := 1
-  number := 600851475143
+	largestFactor := 1
+	number := 600851475143
 
-  if number % 2 == 0 {
-    number = (number / 2)
-    largestFactor = 2
-  }
+	if number%2 == 0 {
+		number = (number / 2)
+		largestFactor = 2
+	}
 
-  end := int(math.Sqrt(float64(number)))
+	end := int(math.Sqrt(float64(number)))
 
-  for x := 3; x < end; x += 2 {
-    if number % x == 0 {
-      number = number / x
-      largestFactor = x
-    }
-  }
-  fmt.Println(largestFactor)
-  // 6857
+	for x := 3; x < end; x += 2 {
+		if number%x == 0 {
+			number = number / x
+			largestFactor = x
+		}
+	}
+	fmt.Println(largestFactor)
+	// 6857
 }

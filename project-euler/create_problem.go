@@ -45,7 +45,7 @@ import (
 
 func main() {
 	startTime := time.Now()
-  answer := ""
+  answer := 0
   fmt.Println(answer)
 	duration := time.Since(startTime)
 	fmt.Println("Duration:", duration)
